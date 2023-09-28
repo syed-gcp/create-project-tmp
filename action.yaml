@@ -1,0 +1,15 @@
+name: 'Create GCP Project'
+description: 'Create a new Google Cloud Project'
+inputs:
+  project-name:
+    description: 'Name of the GCP Project'
+    required: true
+  project-id:
+    description: 'ID of the GCP Project'
+    required: true
+  flags:
+    description: 'Optional flags for gcloud command'
+    required: false # This makes the parameter optional
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
