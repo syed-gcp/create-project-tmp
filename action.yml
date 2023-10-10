@@ -1,5 +1,5 @@
 name: 'Create GCP Project'
-description: 'Create a new Google Cloud Project'
+description: 'Create a new Google Cloud Project using GitHub Actions'
 inputs:
   project-name:
     description: 'Name of the GCP Project'
@@ -7,6 +7,9 @@ inputs:
   project-id:
     description: 'ID of the GCP Project'
     required: true
+outputs:
+  project-id:
+    description: 'ID of the newly created GCP Project'
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: 'node12'
+  main: 'dist/index.js'
