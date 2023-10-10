@@ -1,0 +1,12 @@
+name: 'Create GCP Project'
+description: 'Create a new Google Cloud Project'
+inputs:
+  project-name:
+    description: 'Name of the GCP Project'
+    required: true
+  project-id:
+    description: 'ID of the GCP Project'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
