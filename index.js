@@ -8,12 +8,17 @@ async function run() {
         // Get inputs from the workflow file:
         const projectName = core.getInput('project-name', { required: true });
         const projectId = core.getInput('project-id', { required: true });
+        const orgId = core.getInput('org-id', { required: true });
 
         // Set up the ProjectsClient and request:
         const resourcemanagerClient = new ProjectsClient();
         const project = {
             projectId: projectId,
-            displayName: projectName
+            displayName: projectName,
+            parent: {
+                type: "organization",
+                id: orgId
+            }
         };
 
         // Run the request to create the project:
