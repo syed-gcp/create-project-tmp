@@ -7,6 +7,10 @@ inputs:
   project-id:
     description: 'ID of the GCP Project'
     required: true
+  organization-id:
+    description: 'The ID of the Google Cloud Organization'
+    required: true
+
 outputs:
   project-id:
     description: 'ID of the newly created GCP Project'
