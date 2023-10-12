@@ -12,7 +12,6 @@ async function run() {
         // Set up the ProjectsClient and request:
         const resourcemanagerClient = new ProjectsClient();
         const project = {
-            name: `projects/${projectId}`,
             projectId: projectId,
             displayName: projectName
         };
