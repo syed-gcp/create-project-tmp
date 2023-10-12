@@ -15,10 +15,7 @@ async function run() {
         const project = {
             projectId: projectId,
             displayName: projectName,
-            parent: {
-                type: "organization",
-                id: orgId
-            }
+            parent: `organizations/${organizationId}`
         };
 
         // Run the request to create the project:
