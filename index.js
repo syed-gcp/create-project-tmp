@@ -1,3 +1,8 @@
+const { execSync } = require('child_process');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+
 'use strict';
 
 const core = require('@actions/core');
@@ -5,12 +10,17 @@ const { ProjectsClient } = require('@google-cloud/resource-manager').v3;
 
 async function run() {
     try {
-        // Authentication using GOOGLE_GHA_CREDS_PATH environment variable:
-        const credFile = process.env.GOOGLE_GHA_CREDS_PATH;
-        if (!credFile) {
-            throw new Error('No authentication found, authenticate with `google-github-actions/auth`.');
+        // Extract credentials from the environment variable and write to a temporary file:
+        const creds = process.env.GOOGLE_CREDENTIALS_FILE;
+        if (!creds) {
+            throw new Error('Credentials are not provided. Set the GOOGLE_CREDENTIALS_FILE environment variable.');
         }
-        process.env.GOOGLE_APPLICATION_CREDENTIALS = credFile;
+
+        const credFilePath = path.join(os.tmpdir(), 'gcloud-service-account.json');
+        fs.writeFileSync(credFilePath, creds, { encoding: 'utf-8' });
+
+        // Authenticate using the gcloud CLI:
+        execSync(`gcloud auth activate-service-account --key-file=${credFilePath}`);
 
         // Get inputs from the workflow file:
         const projectName = core.getInput('project-name', { required: true });
