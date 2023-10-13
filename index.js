@@ -5,6 +5,13 @@ const { ProjectsClient } = require('@google-cloud/resource-manager').v3;
 
 async function run() {
     try {
+        // Authentication using GOOGLE_GHA_CREDS_PATH environment variable:
+        const credFile = process.env.GOOGLE_GHA_CREDS_PATH;
+        if (!credFile) {
+            throw new Error('No authentication found, authenticate with `google-github-actions/auth`.');
+        }
+        process.env.GOOGLE_APPLICATION_CREDENTIALS = credFile;
+
         // Get inputs from the workflow file:
         const projectName = core.getInput('project-name', { required: true });
         const projectId = core.getInput('project-id', { required: true });
@@ -24,13 +31,11 @@ async function run() {
 
         // Log the response and set the output:
         console.log(response);
-        core.setOutput('project-id', response.name); // You might want to output different information
+        core.setOutput('project-id', response.name);
 
     } catch (error) {
-        // If there's an error, set the action as failed:
         core.setFailed(error.message);
     }
 }
 
-// Run the action:
 run();
